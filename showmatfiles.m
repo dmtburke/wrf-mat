@@ -5,7 +5,7 @@ if ~exist('lonlat', 'var')
     disp('Using default US box, [-130 -70 20 60].');
     lonlat = [-130 -70 20 60];
 else
-    disp(['Using [' lonlat(1) ' ' lonlat(2) ' ' lonlat(3) ' ' lonlat(4)])
+    disp(lonlat)
 end
 
 % [-130 -70 20 60]
@@ -20,12 +20,12 @@ for i=1:length(d)
     
     % These operate under the assumption that the biggest value will
     % always appear in the top left and the lowest in the bottom right
-    upperLong = u.long(1);
-    lowerLong = u.long(length(u.long));
+    upperLong = max(u.long(:));
+    lowerLong = min(u.long(:));
     
-    upperLat  = u.lat(1);
-    lowerLat  = u.lat(length(u.lat));
-    
+    upperLat  = max(u.lat(:));
+    lowerLat  = min(u.lat(:));
+   
     longinRange = lonlat(1) < upperLong && lonlat(2) > lowerLong;
     latinRange  = lonlat(3) < upperLat  && lonlat(4) > lowerLat;
     
