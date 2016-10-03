@@ -23,7 +23,7 @@ for i=1:length(d)
     if firemaskinRange(u, lonlat)
         disp(['Drawing ' d{i} '...']);
         
-        axis(lonlat);
+        %axis(lonlat);
         
         xlabel('Longitude (deg)')
         ylabel('Latitude (deg)')

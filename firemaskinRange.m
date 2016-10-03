@@ -2,35 +2,52 @@ function output = firemaskinRange(u, lonlat)
 % Determines if the firemask intersects the box given by lonlat
 % Returns true if one of the 4 corners lands in lonlat
 
-% TL = Top Left
-% TR = Top Right
-% BL = Bottom Left
-% BR = Bottom Right
+% fmTL = Top Left of firemask
+% fmTR = Top Right of firemask
+% fmBL = Bottom Left of firemask
+% fmBR = Bottom Right of firemask
 
-lonTL = u.long(1);
-lonTR = u.long(size(u.long, 1),1);
-lonBL = u.long(1,size(u.long,2));
-lonBR = u.long(length(u.long));
 
-latTL  = u.lat(1);
-latTR  = u.lat(size(u.lat,1),1);
-latBL  = u.lat(1, size(u.lat,2));
-latBR  = u.lat(length(u.long));
+% These represent cases where the corner of a firemask lands in the box
+fmLonTL = u.long(1);
+fmLonTR = u.long(size(u.long, 1),1);
+fmLonBL = u.long(1,size(u.long,2));
+fmLonBR = u.long(length(u.long));
 
-lonTLinRange = lonTL > lonlat(1) && lonTL < lonlat(2);
-lonTRinRange = lonTR > lonlat(1) && lonTR < lonlat(2);
-lonBLinRange = lonBL > lonlat(1) && lonBL < lonlat(2);
-lonBRinRange = lonBR > lonlat(1) && lonBR < lonlat(2);
+fmLatTL  = u.lat(1);
+fmLatTR  = u.lat(size(u.lat,1),1);
+fmLatBL  = u.lat(1, size(u.lat,2));
+fmLatBR  = u.lat(length(u.long));
 
-latTLinRange = latTL > lonlat(3) && latTL < lonlat(4);
-latTRinRange = latTR > lonlat(3) && latTR < lonlat(4);
-latBLinRange = latBL > lonlat(3) && latBL < lonlat(4);
-latBRinRange = latBR > lonlat(3) && latBR < lonlat(4);
+fmLonTLinRange = fmLonTL > lonlat(1) && fmLonTL < lonlat(2);
+fmLonTRinRange = fmLonTR > lonlat(1) && fmLonTR < lonlat(2);
+fmLonBLinRange = fmLonBL > lonlat(1) && fmLonBL < lonlat(2);
+fmLonBRinRange = fmLonBR > lonlat(1) && fmLonBR < lonlat(2);
 
-TLinRange = lonTLinRange && latTLinRange;
-TRinRange = lonTRinRange && latTRinRange;
-BLinRange = lonBLinRange && latBLinRange;
-BRinRange = lonBRinRange && latBRinRange;
+fmLatTLinRange = fmLatTL > lonlat(3) && fmLatTL < lonlat(4);
+fmLatTRinRange = fmLatTR > lonlat(3) && fmLatTR < lonlat(4);
+fmLatBLinRange = fmLatBL > lonlat(3) && fmLatBL < lonlat(4);
+fmLatBRinRange = fmLatBR > lonlat(3) && fmLatBR < lonlat(4);
 
-output = TLinRange || TRinRange || BLinRange || BRinRange;
+fmTLinRange = fmLonTLinRange && fmLatTLinRange;
+fmTRinRange = fmLonTRinRange && fmLatTRinRange;
+fmBLinRange = fmLonBLinRange && fmLatBLinRange;
+fmBRinRange = fmLonBRinRange && fmLatBRinRange;
+
+fminbox = fmTLinRange || fmTRinRange || fmBLinRange || fmBRinRange;
+
+% These represent cases where the corner of the box lands in a firemask
+boxLonL = lonlat(1);
+boxLonR = lonlat(2);
+boxLatT = lonlat(3);
+boxLatB = lonlat(4);
+
+boxLonLinRange = (boxLonL > fmLonTL && boxLonL < fmLonTR) || (boxLonL > fmLonBL && boxLonL < fmLonBR);
+boxLonRinRange = (boxLonR > fmLonTL && boxLonR < fmLonTR) || (boxLonR > fmLonBL && boxLonR < fmLonBR);
+boxLatTinRange = (boxLatT > fmLatBL && boxLatT < fmLatTL) || (boxLatT > fmLatBR && boxLatT < fmLatTR);
+boxLatBinRange = (boxLatB > fmLatBL && boxLatB < fmLatTL) || (boxLatB > fmLatBR && boxLatB < fmLatTR);
+
+boxinfm = boxLonLinRange && boxLonRinRange && boxLatTinRange && boxLatBinRange;
+
+output = fminbox || boxinfm;
 end
