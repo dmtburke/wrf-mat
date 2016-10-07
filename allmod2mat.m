@@ -4,7 +4,7 @@ function allmod2mat
 
 d=dir(['MOD14','*.hdf']);d={d.name};
 d=char(d);
-nfiles = length(d);
+nfiles =    size(d,1);
 
 for i=1:nfiles
     disp(['Converting ' d(i,:) '...']);
