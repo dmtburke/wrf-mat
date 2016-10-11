@@ -1,4 +1,4 @@
-function output = firemaskinRange(u, lonlat)
+function output = fminRange(u, lonlat)
 % Determines if the firemask intersects the box given by lonlat
 % Returns true if one of the 4 corners lands in lonlat
 

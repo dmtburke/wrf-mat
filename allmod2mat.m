@@ -1,13 +1,17 @@
-function allmod2mat
+function allmod2mat(filenames)
 %takes all mod14 files in a directory and attempts to make them all into
 %.mat files
+if ~exist('filenames', 'var')
+    disp('Converting all files');
+    filenames = dir(['MOD03','*.hdf']);
+    filenames={filenames.name};
+else
+    disp('Using: ');
+    disp(filenames);
+end
 
-d=dir(['MOD14','*.hdf']);d={d.name};
-d=char(d);
-nfiles =    size(d,1);
-
-for i=1:nfiles
-    disp(['Converting ' d(i,:) '...']);
-    mod2mat(d(i,:));
+for i=1:length(filenames)
+    disp(['Converting ' filenames{i} '...']);
+    mod2mat(filenames{i});
 end
 end

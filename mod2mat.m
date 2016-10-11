@@ -1,23 +1,23 @@
-function mod2mat(mod14filename)
-% Take data from a mod14 mod03 hdf pair and save to .mat, needs mod14
+function mod2mat(mod03filename)
+% Take data from a mod14 mod03 hdf pair and save to .mat, needs mod03
 % filename as input.
 
-str=regexp(mod14filename, '\.hdf' , 'match');
+str=regexp(mod03filename, '\.hdf' , 'match');
 
 if (isempty(str))
     error('Passed a non-hdf file')
 end
 
-mod14date=char(regexp(mod14filename, 'A[0-9]+\.[0-9]+\.[0-9]+', 'match'));
-mod03check= strcat('MOD03.', mod14date);
+mod03date=char(regexp(mod03filename, 'A[0-9]+\.[0-9]+\.[0-9]+', 'match'));
+%mod14check= strcat('MOD14.', mod03date);
 
-mod03filename=dir([mod03check '*.hdf']);
+mod14filename=dir(['MOD14.' mod03date '*.hdf']);
 
-if(isempty(mod03filename))
-    error('No matching MOD03 file');
+if(isempty(mod14filename))
+    error('No matching MOD14 file');
 end
 
-mod03filename = mod03filename.name;
+mod14filename = mod14filename.name;
 
 mod14DataPath = '/fire mask';
 mod03LatPath  = '/MODIS_Swath_Type_GEO/Geolocation Fields/Latitude';
@@ -58,7 +58,7 @@ if(fileinfo.Attributes(1).Value ~= 0)
     end
 end
     
-endfilename = strcat(mod14date, '.mat');
+endfilename = strcat(mod03date, '.mat');
 u.title = endfilename;
 
 save(endfilename, 'u');

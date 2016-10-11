@@ -20,7 +20,7 @@ output = [];
 for i=1:length(d)
     load(d{i});
     
-    if firemaskinRange(u, lonlat)
+    if fminRange(u, lonlat)
         disp(['Drawing ' d{i} '...']);
         
         %axis(lonlat);
