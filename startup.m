@@ -1,7 +1,6 @@
-% assumes wrf-fire on the same level
-cwd__=pwd
-addpath(pwd)
-cd ../../wrf-fire/wrfv2_fire/test/em_fire
+cwd_=pwd
+cd ../wrf-fire/wrfv2_fire/test/em_fire
 startup
-cd(cwd__)
-clear cwd__
+cd(cwd_)
+addpath (cwd_)
+clear cwd_

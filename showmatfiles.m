@@ -20,10 +20,10 @@ output = [];
 for i=1:length(d)
     load(d{i});
     
-    if fminRange(u, lonlat)
+    if firemaskinRange(u, lonlat)
         disp(['Drawing ' d{i} '...']);
         
-        axis(lonlat);
+        %axis(lonlat);
         
         xlabel('Longitude (deg)')
         ylabel('Latitude (deg)')
